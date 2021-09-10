@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { styled } from '../stitches.config'
 
 export default function Home() {
   return (
