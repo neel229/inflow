@@ -14,14 +14,13 @@ describe("Ocean of Notes - Testing", async function () {
     const [_, account1, account2]: SignerWithAddress[] =
       await ethers.getSigners();
 
-    // create an author whose account address is account1
     let authorBalance = await (await account1.getBalance()).toString();
     console.log("Author Balance Before: ", authorBalance);
-    await platform.connect(account1).addAuthor("asdf");
 
     // create a course
     const coursePrice = ethers.utils.parseEther("1");
     await platform.connect(account1).addCourse(coursePrice, "aldjfksf");
+    await platform.connect(account1).addCourse(coursePrice, "slfasf");
 
     // create a student
     let studentBalance = await (await account2.getBalance()).toString();
@@ -30,6 +29,7 @@ describe("Ocean of Notes - Testing", async function () {
 
     // purchase course
     await platform.connect(account2).purchaseCourse(1, { value: coursePrice });
+    await platform.connect(account2).purchaseCourse(2, { value: coursePrice });
 
     // reward sardine
     await platform.connect(account2).rewardSardine(30);
@@ -39,8 +39,16 @@ describe("Ocean of Notes - Testing", async function () {
     let studentTokenBalance = await (
       await platform.connect(account2).getSardineBalance()
     ).toString();
+    let courses = await platform.connect(account2).getEnrolledCourses();
+    courses = await Promise.all(
+      courses.map(async (i: any) => {
+        const course = i.toString();
+        return course;
+      })
+    );
     console.log("Author Balance After: ", authorBalance);
     console.log("Student Balance After: ", studentBalance);
     console.log("Student Sardine Balance: ", studentTokenBalance);
+    console.log("Student Enrolled Courses: ", courses);
   });
 });

@@ -1,5 +1,6 @@
 import Head from 'next/head'
 
+
 export default function Home() {
   return (
       <>
@@ -7,6 +8,7 @@ export default function Home() {
           <title>Dapp Tutorial</title>
         </Head>
         <h1>Welcome to Polygon dApp tutorial</h1>
+        
       </>
   )
 }
