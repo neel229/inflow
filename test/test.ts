@@ -1,7 +1,7 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { ethers } from "hardhat";
 
-describe("Ocean of Notes - Testing", async function () {
+describe("Inflow", async function () {
   it("Deploy the smart contracts", async function () {
     console.log(
       "----------------Deploying Smart Contracts--------------------"
@@ -37,9 +37,9 @@ describe("Ocean of Notes - Testing", async function () {
     authorBalance = await (await account1.getBalance()).toString();
     studentBalance = await (await account2.getBalance()).toString();
     let studentTokenBalance = await (
-      await platform.connect(account2).getSardineBalance()
+      await platform.connect(account2).fetchSardineBalance()
     ).toString();
-    let courses = await platform.connect(account2).getEnrolledCourses();
+    let courses = await platform.connect(account2).fetchEnrolledCourses();
     courses = await Promise.all(
       courses.map(async (i: any) => {
         const course = i.toString();
