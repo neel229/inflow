@@ -6,9 +6,9 @@ export default function Home() {
     <>
       <Header />
       <Head>
-        <title>Dapp Tutorial</title>
+        <title>About Page</title>
       </Head>
-      <h1>Welcome to Polygon dApp tutorial</h1>
+      <h1>This is the about page</h1>
     </>
   );
 }
