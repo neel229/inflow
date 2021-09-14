@@ -1,18 +1,30 @@
-import Link from "next/link";
+import {
+  Container,
+  SubTitleContainer,
+  TextContainer,
+  TitleContainer,
+  VideoContainer,
+} from "./styled/Header.styled";
 
-export const Header = () => {
+const Header = () => {
   return (
-    <>
-      <div>
-        <li>
-          <Link href="/">
-            <a>Inflow</a>
-          </Link>
-          <Link href="/about">
-            <a>About</a>
-          </Link>
-        </li>
-      </div>
-    </>
+    <Container>
+      <TextContainer>
+        <TitleContainer>
+          <h1>Inflow</h1>
+        </TitleContainer>
+        <SubTitleContainer>
+          <p>
+            Introducing a new decentralized way of <br />
+            learning and teaching.
+          </p>
+        </SubTitleContainer>
+      </TextContainer>
+      <VideoContainer>
+        <p>Video explaining inflow will play here</p>
+      </VideoContainer>
+    </Container>
   );
 };
+
+export default Header;

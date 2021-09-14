@@ -1,4 +1,5 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
+// import { ethers } from "ethers";
 import { ethers } from "hardhat";
 
 describe("Inflow", async function () {
@@ -18,9 +19,11 @@ describe("Inflow", async function () {
     console.log("Author Balance Before: ", authorBalance);
 
     // create a course
-    const coursePrice = ethers.utils.parseEther("1");
+    const coursePrice = ethers.utils.parseEther("0.01");
     await platform.connect(account1).addCourse(coursePrice, "aldjfksf");
-    await platform.connect(account1).addCourse(coursePrice, "slfasf");
+    await platform
+      .connect(account1)
+      .addCourse(coursePrice, "Docker: Zero to Mastery");
 
     // create a student
     let studentBalance = await (await account2.getBalance()).toString();
@@ -39,16 +42,33 @@ describe("Inflow", async function () {
     let studentTokenBalance = await (
       await platform.connect(account2).fetchSardineBalance()
     ).toString();
-    let courses = await platform.connect(account2).fetchEnrolledCourses();
-    courses = await Promise.all(
-      courses.map(async (i: any) => {
-        const course = i.toString();
-        return course;
-      })
-    );
+    // let courses = await platform.connect(account2).fetchEnrolledCourses();
+    // courses = await Promise.all(
+    //   courses.map(async (i: any) => {
+    //     const course = i.toString();
+    //     return course;
+    //   })
+    // );
     console.log("Author Balance After: ", authorBalance);
     console.log("Student Balance After: ", studentBalance);
     console.log("Student Sardine Balance: ", studentTokenBalance);
-    console.log("Student Enrolled Courses: ", courses);
+    // console.log("Student Enrolled Courses: ", courses);
+
+    let courses = await platform.fetchCourses();
+    courses = await Promise.all(
+      courses.map(async (c: any) => {
+        let course = {
+          courseId: c.courseId.toString(),
+          courseMetadata: c.courseMetadata,
+          authoAddress: c.authorAddress,
+          coursePrice: ethers.utils.formatUnits(
+            c.coursePrice.toString(),
+            "ether"
+          ),
+        };
+        return course;
+      })
+    );
+    console.log(courses);
   });
 });

@@ -1,14 +1,12 @@
-import Head from "next/head";
-import { Header } from "../components/Header";
-
-export default function Home() {
+import Header from "../components/Header";
+import LatestCourses from "../components/LatestCourses";
+const Home = () => {
   return (
     <>
       <Header />
-      <Head>
-        <title>Dapp Tutorial</title>
-      </Head>
-      <h1>Welcome to Polygon dApp tutorial</h1>
+      <LatestCourses />
     </>
   );
-}
+};
+
+export default Home;

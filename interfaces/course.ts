@@ -1,8 +1,9 @@
 export interface Course {
   courseId: any;
   price: string;
-  authoAddress: any;
+  authorAddress: any;
   thumbnail: any;
   title: any;
-  description: any;
+  author: string;
+  description: string;
 }

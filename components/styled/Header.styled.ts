@@ -11,7 +11,6 @@ export const Container = styled("header", {
 export const TextContainer = styled("div", {
   display: "flex",
   flexDirection: "column",
-  textAlign: "center",
 });
 
 export const VideoContainer = styled("div", {

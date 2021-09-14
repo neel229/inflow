@@ -1,12 +1,11 @@
-import * as hre from "hardhat"
+import * as hre from "hardhat";
 
 async function main() {
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
+  const Platform = await hre.ethers.getContractFactory("Platform");
+  const platform = await Platform.deploy();
+  await platform.deployed();
 
-  await greeter.deployed();
-
-  console.log("Greeter deployed to:", greeter.address);
+  console.log("Platform deployed to:", platform.address);
 }
 
 main()

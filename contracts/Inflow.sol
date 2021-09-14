@@ -115,8 +115,8 @@ contract Platform is ReentrancyGuard {
     function fetchCourses() public view returns (Course[] memory) {
         uint256 courseCount = _courseIds.current();
         Course[] memory courseList = new Course[](courseCount);
-        for (uint256 i = 0; i < courseCount; i++) {
-            courseList[i] = courses[i];
+        for (uint256 i = 1; i <= courseCount; i++) {
+            courseList[i - 1] = courses[i];
         }
         return courseList;
     }
