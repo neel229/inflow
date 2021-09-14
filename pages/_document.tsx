@@ -11,6 +11,10 @@ export default class Document extends NextDocument {
             id="stitches"
             dangerouslySetInnerHTML={{ __html: getCssText() }}
           />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Inter&family=Poppins&family=Roboto+Mono&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />
