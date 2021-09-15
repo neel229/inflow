@@ -26,7 +26,15 @@
     "jsx": "preserve",
     "outDir": "dist"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "./scripts", "./test"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "./scripts",
+    "./test",
+    "postcss.config.js",
+    "tailwind.config.js"
+  ],
   "files": ["./hardhat.config.ts"],
   "exclude": ["node_modules"]
 }

@@ -1,9 +1,5 @@
 const Footer = () => {
-  return (
-    <>
-      <p>Copyright Inflow, 2021</p>
-    </>
-  );
+  return <div></div>;
 };
 
 export default Footer;

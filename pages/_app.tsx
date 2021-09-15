@@ -1,3 +1,4 @@
+import "tailwindcss/tailwind.css";
 import React from "react";
 import { AppProps } from "next/app";
 import { globalCss } from "@stitches/react";
@@ -15,15 +16,9 @@ const gloablStyles = globalCss({
     backgroundColor: "$loContrast",
     boxSizing: "border-box",
   },
-  "body, button": {
-    fontFamily: "Poppins",
-  },
-  "p, h1, h2, h3": {
-    fontFamily: "Inter",
-  },
   svg: { display: "block" },
   "::selection": {
-    backgroundColor: "$grass4",
+    backgroundColor: "$grass3",
   },
 });
 

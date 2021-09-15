@@ -1,10 +1,9 @@
-import Header from "../components/Header";
-import LatestCourses from "../components/LatestCourses";
+import Hero from "../components/Hero";
+
 const Home = () => {
   return (
     <>
-      <Header />
-      <LatestCourses />
+      <Hero />
     </>
   );
 };

@@ -1,40 +1,30 @@
-import {
-  Nav,
-  LogoContainer,
-  LinkContainer,
-  NavLink,
-} from "./styled/Navbar.styled";
 import Link from "next/link";
 import Image from "next/image";
 
 const Navbar = () => {
   return (
-    <>
-      <Nav>
-        <LogoContainer>
+    <nav className="bg-transparent p-4">
+      <div className="mx-auto flex items-center">
+        <div className="flex-1">
           <Link href="/">
-            <a>
-              <Image src="/stitches.svg" width="35px" height="35px"></Image>
+            <a className="pl-28 flex items-center py-2 px-3 text-gray-700">
+              <Image src="/stitches.svg" width="35px" height="35px" />
+              <span className="font-semibold pl-2 text-xl">INFLOW</span>
             </a>
           </Link>
-        </LogoContainer>
-        <LinkContainer>
-          <Link href="/about">
-            <NavLink>How It Works</NavLink>
+        </div>
+        <div className="flex items-center space-x-3 pr-28">
+          <Link href="/add-course">
+            <a className="py-2 px-3 text-gray-700 font-medium">Add Course</a>
           </Link>
-        </LinkContainer>
-        <LinkContainer>
-          <Link href="/about">
-            <NavLink>Add Course</NavLink>
+          <Link href="/sign-in">
+            <a className="py-2 px-3 border-black border-2 rounded-md font-bold hover:shadow-lg">
+              Connect Wallet
+            </a>
           </Link>
-        </LinkContainer>
-        <LinkContainer>
-          <Link href="/auth">
-            <NavLink isAuth="true">Sign In</NavLink>
-          </Link>
-        </LinkContainer>
-      </Nav>
-    </>
+        </div>
+      </div>
+    </nav>
   );
 };
 
