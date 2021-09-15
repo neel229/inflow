@@ -42,8 +42,8 @@ const Header = () => {
                 <path
                   d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z"
                   fill="currentColor"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                 ></path>
               </svg>
             </button>
@@ -72,12 +72,12 @@ const Header = () => {
               the knowledge gained.
               <br />
               <br />
-              <span className="bg-radix-tomato3 px-1 py-1 rounded-sm font-medium text-radix-tomato11">
+              <span className="bg-radix-violet4 px-1 py-1 rounded-sm font-medium text-radix-violet11">
                 {" "}
                 Fun Fact:
               </span>{" "}
               Students get rewarded with{" "}
-              <span className="px-1 py-1 rounded-sm  text-radix-tomato11">
+              <span className="px-1 py-1 rounded-sm  text-radix-violet11">
                 (Sardine)
               </span>
               {" , "}
@@ -86,7 +86,7 @@ const Header = () => {
             </span>
           </p>
           <div className="flex justify-start">
-            <button className="bg-radix-tomato4 hover:bg-radix-tomato5 text-center text-radix-tomato11 font-bold py-2 px-4 rounded w-42 text-xl inline-flex items-center space-x-2">
+            <button className="bg-radix-violet4 hover:bg-radix-violet5 text-center text-radix-violet11 font-bold py-2 px-4 rounded w-42 text-xl inline-flex items-center space-x-2">
               <span>Start Learning</span>
               <svg
                 width="15"
@@ -99,8 +99,8 @@ const Header = () => {
                 <path
                   d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z"
                   fill="currentColor"
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                 ></path>
               </svg>
             </button>
