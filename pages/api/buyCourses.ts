@@ -1,7 +1,7 @@
-import { Course } from "../../interfaces/course";
+import { Course } from "../../utils/interfaces/course";
 import Web3Modal from "web3modal";
 import ethers from "ethers";
-import { platformContract } from "../../config";
+import { platformContract } from "../../utils/config";
 import Platform from "../../artifacts/contracts/Inflow.sol/Platform.json";
 
 const buyCourse = async (course: Course) => {

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Course } from "../interfaces/course";
+import { Course } from "../utils/interfaces/course";
 import fetchCourses from "../pages/api/fetchCourses";
+import Link from "next/link";
 
 const LatestCourse = () => {
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ const LatestCourse = () => {
           </span>
         </div>
       </div>
-      <div className="py-4">
+      <div className="py-14">
         {loading && !course.length ? (
           <div
             className="bg-radix-tomato4 border border-radix-tomato8 text-radix-tomato11 px-4 py-3 rounded relative"
@@ -49,40 +50,52 @@ const LatestCourse = () => {
           </div>
         ) : (
           course.map((c, i) => (
-            <div className="max-w-sm rounded overflow-hidden shadow-lg" key={i}>
-              <img
-                className="w-full"
-                src={c.thumbnail}
-                alt="Course Thumbnail"
-              />
-              <div className="px-6 py-4">
-                <div className="font-bold text-xl mb-2 overflow-hidden">
-                  {c.title}
+            <Link href={`/courses/${c.courseId}`}>
+              <a>
+                <div
+                  className="max-w-sm rounded overflow-hidden hover:shadow-lg border-2 border-black cursor-pointer"
+                  key={i}
+                >
+                  <img
+                    className="w-full"
+                    src={c.thumbnail}
+                    alt="Course Thumbnail"
+                  />
+                  <div className="px-6 py-2">
+                    <div className="font-bold text-xl overflow-hidden">
+                      {c.title}
+                    </div>
+                    <p className="text-gray-700 text-base truncate">
+                      {c.description}
+                    </p>
+                  </div>
+                  <div className="px-6 flex justify-between py-2 font-bold">
+                    <p className="text-gray-700 text-base overflow-hidden">
+                      <span className="font-spaceGrotesk font-semibold bg-radix-indigo3 text-radix-indigo11 px-1 py-1 rounded">
+                        Author:
+                      </span>
+                      {" " + c.author}
+                    </p>
+                    <p className="text-gray-700 text-base overflow-hidden">
+                      <span className="font-spaceGrotesk font-semibold bg-radix-indigo3 text-radix-indigo11 px-1 py-1 rounded">
+                        Price:
+                      </span>
+                      {" " + c.price}
+                    </p>
+                  </div>
+                  {/* <div className="px-6 pt-4 pb-2">
+                    {c.tags.map((tag, i) => (
+                      <span
+                        key={i}
+                        className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div> */}
                 </div>
-                <p className="text-gray-700 text-base overflow-hidden">
-                  {c.description}
-                </p>
-              </div>
-              <div className="px-6 py-4">
-                <p className="text-gray-700 text-base overflow-hidden">
-                  {c.author}
-                </p>
-                <p className="text-gray-700 text-base overflow-hidden">
-                  {c.price}
-                </p>
-              </div>
-              {/* <div className="px-6 pt-4 pb-2">
-                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                  #photography
-                </span>
-                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                  #travel
-                </span>
-                <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-                  #winter
-                </span>
-              </div> */}
-            </div>
+              </a>
+            </Link>
           ))
         )}
       </div>

@@ -1,29 +1,24 @@
 import { useState } from "react";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { ethers } from "ethers";
-import Web3Modal from "web3modal";
-import { platformContract } from "../config";
-import Platfrom from "../artifacts/contracts/Inflow.sol/Platform.json";
-
-type CourseItem = {
-  title: string;
-  description: string;
-  author: string;
-  price: string;
-  thumbnail: string;
-  videos: string[];
-};
+import { Course } from "../utils/interfaces/course";
+import createCourse from "./api/createCourse";
 
 const client = ipfsHttpClient({ url: "https://ipfs.infura.io:5001/api/v0" });
 
 const CreateCourse = () => {
-  const [metadata, setMetada] = useState<CourseItem>({
+  const [metadata, setMetada] = useState<Course>({
     title: "",
     description: "",
     author: "",
     price: "",
     thumbnail: "",
+    // previewVideo: "",
+    // topicsList: [""],
     videos: [""],
+    // tags: [""],
+    courseId: null,
+    authorAddress: null,
   });
 
   const handleThumbnail = async (e: any) => {
@@ -85,20 +80,10 @@ const CreateCourse = () => {
       const added = await client.add(data);
       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
       const price = ethers.utils.parseUnits(metadata.price, "ether");
-      createCourse(url, price);
+      await createCourse(url, price);
     } catch (err) {
       console.log(err);
     }
-  };
-  const createCourse = async (url: string, price: ethers.BigNumber) => {
-    const web3Modal = new Web3Modal();
-    const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
-    const signer = provider.getSigner();
-
-    let platform = new ethers.Contract(platformContract, Platfrom.abi, signer);
-    const tx = await platform.addCourse(price, url);
-    await tx.wait();
   };
 
   return (
@@ -138,6 +123,13 @@ const CreateCourse = () => {
         {metadata.thumbnail && (
           <img className="rounded mt-4" src={metadata.thumbnail} width="350" />
         )}
+        {/* <input
+          type="file"
+          name="Preview Video"
+          className="my-4"
+          onChange={handleThumbnail}
+        /> */}
+        <input />
         <input
           type="file"
           name="Videos"

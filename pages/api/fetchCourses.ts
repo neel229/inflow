@@ -1,8 +1,8 @@
 import { ethers } from "ethers";
-import { platformContract } from "../../config";
+import { platformContract } from "../../utils/config";
 import Platform from "../../artifacts/contracts/Inflow.sol/Platform.json";
 import axios from "axios";
-import { Course } from "../../interfaces/course";
+import { Course } from "../../utils/interfaces/course";
 
 const fetchCourses = async (): Promise<Course[]> => {
   const provider = new ethers.providers.JsonRpcProvider();
@@ -18,13 +18,17 @@ const fetchCourses = async (): Promise<Course[]> => {
       let metadata: any = await axios.get(metadataURI);
       let price = ethers.utils.formatUnits(c.coursePrice.toString(), "ether");
       let course: Course = {
-        courseId: c.courseId.toString(),
+        title: metadata.data.title,
+        description: metadata.data.description,
+        author: metadata.data.author,
         price: price,
+        thumbnail: metadata.data.thumbnail,
+        // previewVideo: metadata.data.previewVideo,
+        // topicsList: metadata.data.topicsList,
+        videos: metadata.data.videos,
+        // tags: metadata.data.tags,
+        courseId: c.courseId.toString(),
         authorAddress: c.authorAddress,
-        thumbnail: metadata.thumbnail,
-        title: metadata.title,
-        author: metadata.author,
-        description: metadata.description,
       };
       return course;
     })

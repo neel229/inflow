@@ -121,8 +121,16 @@ contract Platform is ReentrancyGuard {
         return courseList;
     }
 
-    function fetchEnrolledCourses() public view returns (uint256[] memory) {
-        return students[msg.sender].courseEnrolledList;
+    function fetchCourseById(uint256 courseId)
+        public
+        view
+        returns (Course memory)
+    {
+        return courses[courseId];
+    }
+
+    function fetchEnrolledCourses(address _student) public view returns (uint256[] memory) {
+        return students[_student].courseEnrolledList;
     }
 
     function fetchCreatedCourses() public view returns (Course[] memory) {

@@ -1,11 +1,21 @@
+import { Web3Provider } from "@ethersproject/providers";
+import { useWeb3React } from "@web3-react/core";
 import Hero from "../components/Hero";
 import LatestCourse from "../components/LatestCourses";
 
 const Home = () => {
+  const { active } = useWeb3React<Web3Provider>();
+
   return (
     <>
-      <Hero />
-      <LatestCourse />
+      {!active ? (
+        <>
+          <Hero />
+          <LatestCourse />
+        </>
+      ) : (
+        <LatestCourse />
+      )}
     </>
   );
 };

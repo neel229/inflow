@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import Wallet from "./Wallet";
 
 const Navbar = () => {
   return (
@@ -17,11 +18,7 @@ const Navbar = () => {
           <Link href="/add-course">
             <a className="py-2 px-3 text-gray-700 font-medium">Add Course</a>
           </Link>
-          <Link href="/sign-in">
-            <a className="py-2 px-3 border-black border-2 rounded-md font-bold hover:shadow-lg">
-              Connect Wallet
-            </a>
-          </Link>
+          <Wallet />
         </div>
       </div>
     </nav>

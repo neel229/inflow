@@ -3,6 +3,8 @@ import React from "react";
 import { AppProps } from "next/app";
 import { globalCss } from "@stitches/react";
 import Layout from "../components/Layout";
+import { Web3ReactProvider } from "@web3-react/core";
+import { getLibrary } from "../utils/connector";
 
 const gloablStyles = globalCss({
   "*": {
@@ -25,9 +27,11 @@ const gloablStyles = globalCss({
 const MyApp = ({ Component, pageProps }: AppProps) => {
   gloablStyles();
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </Web3ReactProvider>
   );
 };
 
