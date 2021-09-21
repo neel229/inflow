@@ -23,10 +23,10 @@ const fetchCourses = async (): Promise<Course[]> => {
         author: metadata.data.author,
         price: price,
         thumbnail: metadata.data.thumbnail,
-        // previewVideo: metadata.data.previewVideo,
-        // topicsList: metadata.data.topicsList,
+        previewVideo: metadata.data.previewVideo,
+        topicsList: metadata.data.topicsList,
         videos: metadata.data.videos,
-        // tags: metadata.data.tags,
+        tags: metadata.data.tags,
         courseId: c.courseId.toString(),
         authorAddress: c.authorAddress,
       };

@@ -89,8 +89,7 @@ contract Platform is ReentrancyGuard {
             msg.value == price,
             "Insufficient funds to purchase this course..."
         );
-        courses[courseId].authorAddress.transfer((msg.value / 10) * 9);
-        payable(owner).transfer((msg.value / 10) * 1);
+        courses[courseId].authorAddress.transfer(msg.value);
         _coursesSolds.increment();
 
         students[msg.sender].courseEnrolledList.push(courseId);
@@ -129,7 +128,11 @@ contract Platform is ReentrancyGuard {
         return courses[courseId];
     }
 
-    function fetchEnrolledCourses(address _student) public view returns (uint256[] memory) {
+    function fetchEnrolledCourses(address _student)
+        public
+        view
+        returns (uint256[] memory)
+    {
         return students[_student].courseEnrolledList;
     }
 

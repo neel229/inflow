@@ -9,6 +9,7 @@ import { getLibrary } from "../utils/connector";
 const gloablStyles = globalCss({
   "*": {
     margin: 0,
+    boxSizing: "border-box",
     padding: 0,
   },
   html: {

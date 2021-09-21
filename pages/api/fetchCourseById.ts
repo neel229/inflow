@@ -20,10 +20,10 @@ const fetchCourseById = async (id: ethers.BigNumber): Promise<Course> => {
     author: metadata.data.author,
     price: metadata.data.price,
     thumbnail: metadata.data.thumbnail,
-    // previewVideo: metadata.data.previewVideo,
-    // topicsList: metadata.data.topicsList,
+    previewVideo: metadata.data.previewVideo,
+    topicsList: metadata.data.topicsList,
     videos: metadata.data.videos,
-    // tags: metadata.data.tags,
+    tags: metadata.data.tags,
     courseId: data.courseId.toString(),
     authorAddress: data.authorAddress,
   };

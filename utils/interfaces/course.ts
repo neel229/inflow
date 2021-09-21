@@ -4,10 +4,10 @@ export interface Course {
   author: string;
   price: string;
   thumbnail: string;
-  // previewVideo: string;
-  // topicsList: string[];
+  previewVideo: string;
+  topicsList: string[];
   videos: string[];
-  // tags: string[];
+  tags: string[];
   courseId: any;
   authorAddress: any;
 }

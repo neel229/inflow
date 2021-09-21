@@ -3,20 +3,26 @@ import { create as ipfsHttpClient } from "ipfs-http-client";
 import { ethers } from "ethers";
 import { Course } from "../utils/interfaces/course";
 import createCourse from "./api/createCourse";
+import TagsList from "../components/TagsList";
+import { useWeb3React } from "@web3-react/core";
+import { Web3Provider } from "@ethersproject/providers";
 
 const client = ipfsHttpClient({ url: "https://ipfs.infura.io:5001/api/v0" });
 
 const CreateCourse = () => {
+  const { active, library } = useWeb3React<Web3Provider>();
+  console.log(active);
+
   const [metadata, setMetada] = useState<Course>({
     title: "",
     description: "",
     author: "",
     price: "",
     thumbnail: "",
-    // previewVideo: "",
-    // topicsList: [""],
+    previewVideo: "",
+    topicsList: [""],
     videos: [""],
-    // tags: [""],
+    tags: [""],
     courseId: null,
     authorAddress: null,
   });
@@ -32,6 +38,31 @@ const CreateCourse = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handlePreVideo = async (e: any) => {
+    const preVideo = e.target.files[0];
+    try {
+      const added = await client.add(preVideo, {
+        progress: (prog) => console.log(`received: ${prog}`),
+      });
+      const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      setMetada({ ...metadata, previewVideo: url });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleCSV = async (e: any) => {
+    const input = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (event: any) => {
+      const result: string = event.target.result;
+      const list = result.split(/\r\n|\n/);
+      setMetada({ ...metadata, topicsList: list });
+    };
+
+    reader.readAsText(input);
   };
 
   const handleVideos = async (e: any) => {
@@ -55,8 +86,22 @@ const CreateCourse = () => {
     setMetada({ ...metadata, videos: urlList });
   };
 
+  const handleTags = (tags: string[]) => {
+    setMetada({ ...metadata, tags: tags });
+  };
+
   const handleCourse = async () => {
-    const { title, description, author, price, thumbnail, videos } = metadata;
+    const {
+      title,
+      description,
+      author,
+      price,
+      thumbnail,
+      previewVideo,
+      topicsList,
+      videos,
+      tags,
+    } = metadata;
     if (
       !title ||
       !description ||
@@ -65,6 +110,10 @@ const CreateCourse = () => {
       !thumbnail ||
       !videos.length
     ) {
+      alert("cannot leave any field empty");
+      return;
+    } else if (!active) {
+      alert("You need to connect wallet before adding course");
       return;
     }
     const data = JSON.stringify({
@@ -73,14 +122,17 @@ const CreateCourse = () => {
       author,
       price,
       thumbnail,
+      previewVideo,
+      topicsList,
       videos,
+      tags,
     });
 
     try {
       const added = await client.add(data);
       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
       const price = ethers.utils.parseUnits(metadata.price, "ether");
-      await createCourse(url, price);
+      await createCourse(library, url, price);
     } catch (err) {
       console.log(err);
     }
@@ -89,54 +141,96 @@ const CreateCourse = () => {
   return (
     <div className="flex justify-center">
       <div className="w-1/2 flex flex-col pb-12">
-        <input
-          type="text"
-          placeholder="Course Title"
-          className="mt-8 border rounded p-4"
-          onChange={(e) => setMetada({ ...metadata, title: e.target.value })}
-        />
-        <textarea
-          placeholder="Course Description"
-          className="mt-8 border rounded p-4"
-          onChange={(e) =>
-            setMetada({ ...metadata, description: e.target.value })
-          }
-        />
-        <input
-          type="text"
-          placeholder="Author Name"
-          className="mt-8 border rounded p-4"
-          onChange={(e) => setMetada({ ...metadata, author: e.target.value })}
-        />
-        <input
-          type="text"
-          placeholder="Course Price"
-          className="mt-8 border rounded p-4"
-          onChange={(e) => setMetada({ ...metadata, price: e.target.value })}
-        />
-        <input
-          type="file"
-          name="Thumbnail"
-          className="my-4"
-          onChange={handleThumbnail}
-        />
-        {metadata.thumbnail && (
-          <img className="rounded mt-4" src={metadata.thumbnail} width="350" />
-        )}
-        {/* <input
-          type="file"
-          name="Preview Video"
-          className="my-4"
-          onChange={handleThumbnail}
-        /> */}
-        <input />
-        <input
-          type="file"
-          name="Videos"
-          className="my-4"
-          onChange={handleVideos}
-          multiple
-        />
+        <div className="flex flex-col">
+          <span className=" font-spaceGrotesk font-semibold text-2xl">
+            Course Information
+          </span>
+          <input
+            type="text"
+            placeholder="Course Title"
+            className="mt-8 border rounded p-4"
+            onChange={(e) => setMetada({ ...metadata, title: e.target.value })}
+          />
+          <textarea
+            placeholder="Course Description"
+            className="mt-8 border rounded p-4"
+            onChange={(e) =>
+              setMetada({ ...metadata, description: e.target.value })
+            }
+          />
+          <input
+            type="text"
+            placeholder="Author Name"
+            className="mt-8 border rounded p-4"
+            onChange={(e) => setMetada({ ...metadata, author: e.target.value })}
+          />
+          <input
+            type="text"
+            placeholder="Course Price"
+            className="mt-8 border rounded p-4"
+            onChange={(e) => setMetada({ ...metadata, price: e.target.value })}
+          />
+        </div>
+        <div className="flex flex-col pt-5 py-4">
+          <span className=" font-spaceGrotesk text-2xl font-semibold">
+            Course Attachments
+          </span>
+          <div className="flex items-center justify-between">
+            <span className="font-inter text-lg px-4">Upload Thumbnail:</span>
+            <input
+              type="file"
+              name="Thumbnail"
+              className="my-4 px-6"
+              onChange={handleThumbnail}
+            />
+            {metadata.thumbnail && (
+              <img
+                className="rounded mt-4"
+                src={metadata.thumbnail}
+                width="350"
+              />
+            )}
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="font-inter text-lg px-4">
+              Upload Preview Video:
+            </span>
+            <input
+              type="file"
+              name="Preview Video"
+              className="my-4 px-6"
+              onChange={handlePreVideo}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="font-inter text-lg px-4">
+              Upload Topics CSV File:
+            </span>
+            <input
+              type="file"
+              name="Topics List"
+              accept=".csv"
+              className="my-4 px-6"
+              onChange={handleCSV}
+            />
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="font-inter text-lg px-4">Upload Videos:</span>
+            <input
+              type="file"
+              name="Videos"
+              className="my-4 px-6"
+              onChange={handleVideos}
+              multiple
+            />
+          </div>
+        </div>
+        <div className="py-4">
+          <span className=" font-spaceGrotesk text-2xl font-semibold">
+            Add Tags
+          </span>
+          <TagsList handleTags={handleTags} />
+        </div>
         <button
           onClick={handleCourse}
           className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg"

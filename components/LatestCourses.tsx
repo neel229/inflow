@@ -50,12 +50,9 @@ const LatestCourse = () => {
           </div>
         ) : (
           course.map((c, i) => (
-            <Link href={`/courses/${c.courseId}`}>
+            <Link href={`/courses/${c.courseId}`} key={i}>
               <a>
-                <div
-                  className="max-w-sm rounded overflow-hidden hover:shadow-lg border-2 border-black cursor-pointer"
-                  key={i}
-                >
+                <div className="max-w-sm rounded overflow-hidden hover:shadow-lg border-2 border-black cursor-pointer">
                   <img
                     className="w-full"
                     src={c.thumbnail}
@@ -83,16 +80,16 @@ const LatestCourse = () => {
                       {" " + c.price}
                     </p>
                   </div>
-                  {/* <div className="px-6 pt-4 pb-2">
-                    {c.tags.map((tag, i) => (
+                  <div className="px-6 pt-4 pb-2">
+                    {c.tags.map((tag, index) => (
                       <span
-                        key={i}
+                        key={index}
                         className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
                       >
-                        #{tag}
+                        {tag}
                       </span>
                     ))}
-                  </div> */}
+                  </div>
                 </div>
               </a>
             </Link>
