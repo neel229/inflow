@@ -11,8 +11,9 @@ const client = ipfsHttpClient({ url: "https://ipfs.infura.io:5001/api/v0" });
 
 const CreateCourse = () => {
   const { active, library } = useWeb3React<Web3Provider>();
-  console.log(active);
 
+  const [pvprog, setPvProg] = useState(false);
+  const [vprog, setVProg] = useState(false);
   const [metadata, setMetada] = useState<Course>({
     title: "",
     description: "",
@@ -47,6 +48,7 @@ const CreateCourse = () => {
         progress: (prog) => console.log(`received: ${prog}`),
       });
       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
+      setPvProg(true);
       setMetada({ ...metadata, previewVideo: url });
     } catch (err) {
       console.log(err);
@@ -80,6 +82,7 @@ const CreateCourse = () => {
         const url = `https://ipfs.infura.io/ipfs/${added.path}`;
         urlList.push(url);
       }
+      setVProg(true);
     } catch (err) {
       console.log(err);
     }
@@ -175,8 +178,8 @@ const CreateCourse = () => {
           <span className=" font-spaceGrotesk text-2xl font-semibold">
             Course Attachments
           </span>
-          <div className="flex items-center justify-between">
-            <span className="font-inter text-lg px-4">Upload Thumbnail:</span>
+          <div className="flex items-center">
+            <span className="font-inter text-lg px-4 flex-1">Upload Thumbnail:</span>
             <input
               type="file"
               name="Thumbnail"
@@ -191,7 +194,7 @@ const CreateCourse = () => {
               />
             )}
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center">
             <span className="font-inter text-lg px-4">
               Upload Preview Video:
             </span>
@@ -201,8 +204,11 @@ const CreateCourse = () => {
               className="my-4 px-6"
               onChange={handlePreVideo}
             />
+            {pvprog && (
+              <span>Successfully Uploaded - ✅</span> 
+            )}
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center">
             <span className="font-inter text-lg px-4">
               Upload Topics CSV File:
             </span>
@@ -214,7 +220,7 @@ const CreateCourse = () => {
               onChange={handleCSV}
             />
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center">
             <span className="font-inter text-lg px-4">Upload Videos:</span>
             <input
               type="file"
@@ -223,6 +229,9 @@ const CreateCourse = () => {
               onChange={handleVideos}
               multiple
             />
+            {vprog && (
+              <span>Successfully Uploaded - ✅</span> 
+            )}
           </div>
         </div>
         <div className="py-4">
