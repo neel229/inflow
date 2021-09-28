@@ -1,0 +1,17 @@
+# dependencies
+frontend/node_modules
+contracts/node_modules
+
+# next.js
+frontend/.next/
+frontend/out/
+
+# production
+frontend/build
+
+# vercel
+frontend/.vercel
+
+#Hardhat files
+contracts/cache
+contracts/artifacts
