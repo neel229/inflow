@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { create as ipfsHttpClient } from "ipfs-http-client";
 import { ethers } from "ethers";
 import { Course } from "../utils/interfaces/course";
@@ -6,6 +6,7 @@ import createCourse from "./api/createCourse";
 import TagsList from "../components/TagsList";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
+import SwitchC from "../components/Switch";
 
 const client = ipfsHttpClient({ url: "https://ipfs.infura.io:5001/api/v0" });
 
@@ -27,6 +28,7 @@ const CreateCourse = () => {
     courseId: null,
     authorAddress: null,
   });
+  const [toggle, setToggle] = useState(false);
 
   const handleThumbnail = async (e: any) => {
     const thumbnail = e.target.files[0];
@@ -135,7 +137,7 @@ const CreateCourse = () => {
       const added = await client.add(data);
       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
       const price = ethers.utils.parseUnits(metadata.price, "ether");
-      await createCourse(library, url, price);
+      await createCourse(library, url, price, toggle);
     } catch (err) {
       console.log(err);
     }
@@ -156,7 +158,7 @@ const CreateCourse = () => {
           />
           <textarea
             placeholder="Course Description"
-            className="mt-8 border rounded p-4"
+            className="t-8 border rounded p-4"
             onChange={(e) =>
               setMetada({ ...metadata, description: e.target.value })
             }
@@ -195,7 +197,7 @@ const CreateCourse = () => {
             )}
           </div>
           <div className="flex items-center">
-            <span className="font-inter text-lg px-4">
+            <span className="font-inter text-lg px-4 flex-1">
               Upload Preview Video:
             </span>
             <input
@@ -209,7 +211,7 @@ const CreateCourse = () => {
             )}
           </div>
           <div className="flex items-center">
-            <span className="font-inter text-lg px-4">
+            <span className="font-inter text-lg px-4 flex-1">
               Upload Topics CSV File:
             </span>
             <input
@@ -221,7 +223,7 @@ const CreateCourse = () => {
             />
           </div>
           <div className="flex items-center">
-            <span className="font-inter text-lg px-4">Upload Videos:</span>
+            <span className="font-inter text-lg px-4 flex-1">Upload Videos:</span>
             <input
               type="file"
               name="Videos"
@@ -235,10 +237,16 @@ const CreateCourse = () => {
           </div>
         </div>
         <div className="py-4">
-          <span className=" font-spaceGrotesk text-2xl font-semibold">
+          <span className=" font-spaceGrotesk text-2xl font-semibold flex-1">
             Add Tags
           </span>
           <TagsList handleTags={handleTags} />
+        </div>
+        <div className="py-4 flex items-center">
+          <span className=" font-spaceGrotesk text-2xl font-semibold flex-1">
+            Accept tokens for course:
+          </span>
+          <SwitchC toggle={toggle} setToggle={setToggle}/>
         </div>
         <button
           onClick={handleCourse}

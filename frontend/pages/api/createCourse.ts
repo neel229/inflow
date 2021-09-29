@@ -5,12 +5,13 @@ import Inflow from "../../utils/abis/Inflow.json";
 const createCourse = async (
   library: ethers.providers.Web3Provider | undefined,
   url: string,
-  price: ethers.BigNumber
+  price: ethers.BigNumber,
+  acceptTokens: boolean
 ) => {
   const signer = library?.getSigner();
   let platform = new ethers.Contract(platformContract, Inflow.abi, signer);
 
-  const tx = await platform.createCourse(price, url);
+  const tx = await platform.createCourse(price, url, acceptTokens);
   await tx.wait();
 };
 

@@ -14,9 +14,9 @@ const fetchCourses = async (): Promise<Course[]> => {
   const data = await platform.getCourses();
   const courses: any = await Promise.all(
     data.map(async (c: any) => {
-      let metadataURI = c.courseMetadata;
+      let metadataURI = c.metadata;
       let metadata: any = await axios.get(metadataURI);
-      let price = ethers.utils.formatUnits(c.coursePrice.toString(), "ether");
+      let price = ethers.utils.formatUnits(c.price.toString(), "ether");
       let course: Course = {
         title: metadata.data.title,
         description: metadata.data.description,
@@ -27,8 +27,8 @@ const fetchCourses = async (): Promise<Course[]> => {
         topicsList: metadata.data.topicsList,
         videos: metadata.data.videos,
         tags: metadata.data.tags,
-        courseId: c.courseId.toString(),
-        authorAddress: c.authorAddress,
+        courseId: c.id.toString(),
+        authorAddress: c.author,
       };
       return course;
     })

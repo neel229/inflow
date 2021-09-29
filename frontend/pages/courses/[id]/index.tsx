@@ -16,19 +16,18 @@ type Props = {
 
 const CoursePage = ({ course }: Props) => {
   const [purchase, setPurchase] = useState(false);
-  const { library, active, account } = useWeb3React<Web3Provider>();
+  const { library, active } = useWeb3React<Web3Provider>();
 
   const callFEC = async () => {
-    const courses: string[] = await fetchEnrolledCourses(library, account);
+    const courses: string[] = await fetchEnrolledCourses(library);
     setPurchase(courses.includes(course.courseId));
   };
 
   useEffect(() => {
-    console.log(active);
     if (active) {
       callFEC();
     }
-  }, []);
+  }, [active]);
 
   const router = useRouter();
 

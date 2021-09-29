@@ -13,7 +13,7 @@ const fetchCourseById = async (id: ethers.BigNumber): Promise<Course> => {
   );
 
   const data = await platform.getCourseById(id);
-  const metadata = await axios.get(data.courseMetadata);
+  const metadata = await axios.get(data.metadata);
   const course: Course = {
     title: metadata.data.title,
     description: metadata.data.description,
@@ -24,8 +24,8 @@ const fetchCourseById = async (id: ethers.BigNumber): Promise<Course> => {
     topicsList: metadata.data.topicsList,
     videos: metadata.data.videos,
     tags: metadata.data.tags,
-    courseId: data.courseId.toString(),
-    authorAddress: data.authorAddress,
+    courseId: data.id.toString(),
+    authorAddress: data.author,
   };
   return course;
 };

@@ -6,16 +6,16 @@ import Link from "next/link";
 const LatestCourse = () => {
   const [loading, setLoading] = useState(false);
   const [course, setCourse] = useState<Course[]>([]);
-
-  useEffect(() => {
-    callFetchCourse();
-  }, []);
-
+  
   const callFetchCourse = async () => {
     const courses = await fetchCourses();
     setCourse(courses);
     setLoading(true);
   };
+
+  useEffect(() => {
+    callFetchCourse();
+  }, []);
 
   return (
     <div className="px-28 py-28 flex flex-col">
@@ -50,9 +50,12 @@ const LatestCourse = () => {
           </div>
         ) : (
           course.map((c, i) => (
-            <Link href={`/courses/${c.courseId}`} key={i}>
-              <a>
-                <div className="max-w-sm rounded overflow-hidden hover:shadow-lg border-2 border-black cursor-pointer">
+            <div
+              className="max-w-sm rounded overflow-hidden hover:shadow-lg border-2 border-black cursor-pointer"
+              key={i}
+            >
+              <Link href={`/courses/${c.courseId}`}>
+                <a>
                   <img
                     className="w-full"
                     src={c.thumbnail}
@@ -90,9 +93,9 @@ const LatestCourse = () => {
                       </span>
                     ))}
                   </div>
-                </div>
-              </a>
-            </Link>
+                </a>
+              </Link>
+            </div>
           ))
         )}
       </div>
