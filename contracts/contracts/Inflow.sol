@@ -1,14 +1,20 @@
 // SPDX-License-Identifier: Apache-2.0
-pragma solidity ^0.8.7;
+pragma solidity ^0.8.8;
 
+import "hardhat/console.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "hardhat/console.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract Inflow is ReentrancyGuard {
     using Counters for Counters.Counter;
     Counters.Counter private _courseId;
     Counters.Counter private _courseSold;
+    IERC20 public usdc;
+
+    constructor() {
+        usdc = IERC20(0x68ec573C119826db2eaEA1Efbfc2970cDaC869c4);
+    }
 
     struct Course {
         address payable author;
@@ -48,11 +54,8 @@ contract Inflow is ReentrancyGuard {
     function purchaseCourse(uint256 _id) external payable nonReentrant {
         Course memory course = courses[_id];
         uint256 price = course.price;
-        require(
-            msg.value == price,
-            "Insufficient funds to purchase this course..."
-        );
-        course.author.transfer(msg.value);
+        console.log(price);
+        usdc.transferFrom(msg.sender, course.author, price);
         purchasedCourses[msg.sender].push(course.id);
         _courseSold.increment();
     }

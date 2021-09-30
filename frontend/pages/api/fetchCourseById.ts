@@ -5,12 +5,10 @@ import axios from "axios";
 import { Course } from "../../utils/interfaces/course";
 
 const fetchCourseById = async (id: ethers.BigNumber): Promise<Course> => {
-  const provider = new ethers.providers.JsonRpcProvider();
-  const platform = new ethers.Contract(
-    platformContract,
-    Inflow.abi,
-    provider
+  const provider = new ethers.providers.JsonRpcProvider(
+    "https://ropsten.infura.io/v3/ab69ded8c00d4268b5681fb07ec9db35"
   );
+  const platform = new ethers.Contract(platformContract, Inflow.abi, provider);
 
   const data = await platform.getCourseById(id);
   const metadata = await axios.get(data.metadata);

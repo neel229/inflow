@@ -136,7 +136,7 @@ const CreateCourse = () => {
     try {
       const added = await client.add(data);
       const url = `https://ipfs.infura.io/ipfs/${added.path}`;
-      const price = ethers.utils.parseUnits(metadata.price, "ether");
+      const price = ethers.utils.parseUnits((parseInt(metadata.price, 10) * 1e6).toString(), "wei");
       await createCourse(library, url, price, toggle);
     } catch (err) {
       console.log(err);
@@ -158,7 +158,7 @@ const CreateCourse = () => {
           />
           <textarea
             placeholder="Course Description"
-            className="t-8 border rounded p-4"
+            className="mt-8 border rounded p-4"
             onChange={(e) =>
               setMetada({ ...metadata, description: e.target.value })
             }
@@ -181,7 +181,9 @@ const CreateCourse = () => {
             Course Attachments
           </span>
           <div className="flex items-center">
-            <span className="font-inter text-lg px-4 flex-1">Upload Thumbnail:</span>
+            <span className="font-inter text-lg px-4 flex-1">
+              Upload Thumbnail:
+            </span>
             <input
               type="file"
               name="Thumbnail"
@@ -206,9 +208,7 @@ const CreateCourse = () => {
               className="my-4 px-6"
               onChange={handlePreVideo}
             />
-            {pvprog && (
-              <span>Successfully Uploaded - ✅</span> 
-            )}
+            {pvprog && <span>Successfully Uploaded - ✅</span>}
           </div>
           <div className="flex items-center">
             <span className="font-inter text-lg px-4 flex-1">
@@ -223,7 +223,9 @@ const CreateCourse = () => {
             />
           </div>
           <div className="flex items-center">
-            <span className="font-inter text-lg px-4 flex-1">Upload Videos:</span>
+            <span className="font-inter text-lg px-4 flex-1">
+              Upload Videos:
+            </span>
             <input
               type="file"
               name="Videos"
@@ -231,9 +233,7 @@ const CreateCourse = () => {
               onChange={handleVideos}
               multiple
             />
-            {vprog && (
-              <span>Successfully Uploaded - ✅</span> 
-            )}
+            {vprog && <span>Successfully Uploaded - ✅</span>}
           </div>
         </div>
         <div className="py-4">
@@ -246,7 +246,7 @@ const CreateCourse = () => {
           <span className=" font-spaceGrotesk text-2xl font-semibold flex-1">
             Accept tokens for course:
           </span>
-          <SwitchC toggle={toggle} setToggle={setToggle}/>
+          <SwitchC toggle={toggle} setToggle={setToggle} />
         </div>
         <button
           onClick={handleCourse}

@@ -26,7 +26,7 @@ const LatestCourse = () => {
           </span>
         </div>
       </div>
-      <div className="py-14">
+      <div className="py-14 flex">
         {loading && !course.length ? (
           <div
             className="bg-radix-tomato4 border border-radix-tomato8 text-radix-tomato11 px-4 py-3 rounded relative"
@@ -51,8 +51,9 @@ const LatestCourse = () => {
         ) : (
           course.map((c, i) => (
             <div
-              className="max-w-sm rounded overflow-hidden hover:shadow-lg border-2 border-black cursor-pointer"
+              className="max-w-sm rounded overflow-hidden hover:shadow-lg border-2 border-black cursor-pointer flex-1 mr-4"
               key={i}
+              style={{height: "427px"}}
             >
               <Link href={`/courses/${c.courseId}`}>
                 <a>
@@ -60,6 +61,7 @@ const LatestCourse = () => {
                     className="w-full"
                     src={c.thumbnail}
                     alt="Course Thumbnail"
+                    style={{height: "256px"}}
                   />
                   <div className="px-6 py-2">
                     <div className="font-bold text-xl overflow-hidden">
