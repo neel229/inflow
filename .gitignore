@@ -5,6 +5,7 @@ contracts/node_modules
 # next.js
 frontend/.next/
 frontend/out/
+frontend/.env.local
 
 # production
 frontend/build

@@ -5,18 +5,18 @@ import axios from "axios";
 import { Course } from "../../utils/interfaces/course";
 
 const fetchCourses = async (): Promise<Course[]> => {
-  const provider = new ethers.providers.JsonRpcProvider();
-  const platform = new ethers.Contract(
-    platformContract,
-    Inflow.abi,
-    provider
+  const infuraId = process.env.NEXT_PUBLIC_INFURA_ID as string;
+  const provider = new ethers.providers.JsonRpcProvider(
+    `https://ropsten.infura.io/v3/${infuraId}`
   );
+  console.log(process.env.INFURA_ID as string);
+  const platform = new ethers.Contract(platformContract, Inflow.abi, provider);
   const data = await platform.getCourses();
   const courses: any = await Promise.all(
     data.map(async (c: any) => {
       let metadataURI = c.metadata;
       let metadata: any = await axios.get(metadataURI);
-      let price = ethers.utils.formatUnits(c.price.toString(), "ether");
+      let price = (c.price.toNumber() / 1e6).toString(10);
       let course: Course = {
         title: metadata.data.title,
         description: metadata.data.description,

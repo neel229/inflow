@@ -16,7 +16,7 @@ type Props = {
 
 const CoursePage = ({ course }: Props) => {
   const [purchase, setPurchase] = useState(false);
-  const { library, active } = useWeb3React<Web3Provider>();
+  const { library, active, account } = useWeb3React<Web3Provider>();
 
   const callFEC = async () => {
     const courses: string[] = await fetchEnrolledCourses(library);
@@ -41,7 +41,9 @@ const CoursePage = ({ course }: Props) => {
       alert("You need to connect your wallet before buying a course");
       return;
     }
-    buyCourse(library, course);
+    if (account !== undefined && account !== null) {
+      buyCourse(library, account, course);
+    }
   };
 
   return (
