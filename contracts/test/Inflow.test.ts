@@ -1,24 +1,35 @@
 import hre from "hardhat";
 import { Contract } from "@ethersproject/contracts";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
+import USDC from "../usdc.json";
 
 describe("Inflow Contract Tests", async () => {
   let inflow: Contract;
   let token: Contract;
+  let usdc: Contract;
 
   beforeEach("get factory", async () => {
+    // get fakeusdc contract
+    usdc = await hre.ethers.getContractAt(USDC.result, "0x68ec573C119826db2eaEA1Efbfc2970cDaC869c4")
+    await usdc.deployed();
+    // deploy sardine token
     const Token = await hre.ethers.getContractFactory("Sardine");
     token = await Token.deploy();
     await token.deployed();
+    // deploy inflow
     const Inflow = await hre.ethers.getContractFactory("Inflow");
     inflow = await Inflow.deploy(token.address);
     await inflow.deployed();
   });
 
-  it("Purchase Simulation", async () => {
+  it("Purchase Simulation", async () => {  
     // Step 1: Create signers
     const [owner, teacher, student]: SignerWithAddress[] =
       await hre.ethers.getSigners();
+
+    await usdc.connect(teacher).gimmeSome();
+    const usdcBalance = await usdc.balanceOf(teacher.address);
+    console.log("USDC balance: " + usdcBalance);
 
     // Step 2: Create tokens
     await token.connect(owner).initialize();

@@ -9,7 +9,6 @@ const fetchCourses = async (): Promise<Course[]> => {
   const provider = new ethers.providers.JsonRpcProvider(
     `https://ropsten.infura.io/v3/${infuraId}`
   );
-  console.log(process.env.INFURA_ID as string);
   const platform = new ethers.Contract(platformContract, Inflow.abi, provider);
   const data = await platform.getCourses();
   const courses: any = await Promise.all(

@@ -6,6 +6,7 @@ import VideoPlayer from "../../../components/VideoPlayer";
 import { useWeb3React } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 import buyCourse from "../../api/buyCourses";
+import buyCourseWithSardine from "../../api/buyWithSardine";
 import fetchEnrolledCourses from "../../api/fetchEnrolledCourses";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -45,6 +46,16 @@ const CoursePage = ({ course }: Props) => {
       buyCourse(library, account, course);
     }
   };
+  
+  const handleBuyCourseWithSardine = async () => {
+    if (!active) {
+      alert("You need to connect your wallet before buying a course");
+      return;
+    }
+    if (account !== undefined && account !== null) {
+      buyCourseWithSardine(library, account, course);
+    }
+  };
 
   return (
     <div className="py-12 px-80 flex flex-col">
@@ -63,12 +74,20 @@ const CoursePage = ({ course }: Props) => {
             Watch Course
           </button>
         ) : (
-          <button
-            className="bg-radix-indigo4 hover:bg-radix-indigo5 text-center text-radix-indigo11 font-bold py-2 px-4 rounded w-42 text-xl inline-flex items-center"
-            onClick={handleBuyCourse}
-          >
-            Buy Course
-          </button>
+          <>
+            <button
+              className="bg-radix-indigo4 hover:bg-radix-indigo5 text-center text-radix-indigo11 font-bold py-2 px-4 rounded w-42 text-xl inline-flex items-center"
+              onClick={handleBuyCourse}
+            >
+              Buy Course
+            </button>
+            <button
+              className="bg-radix-indigo4 hover:bg-radix-indigo5 text-center text-radix-indigo11 font-bold py-2 px-4 rounded w-42 text-xl inline-flex items-center"
+              onClick={handleBuyCourseWithSardine}
+            >
+              Buy Course with Sardine
+            </button>
+          </>
         )}
       </div>
       <div className=" font-inter text-lg py-7">{course.description}</div>
