@@ -1,19 +1,21 @@
 // SPDX-License-Identifier: Apache-2.0
 pragma solidity ^0.8.8;
 
-import "hardhat/console.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "./InflowToken.sol";
 
 contract Inflow is ReentrancyGuard {
     using Counters for Counters.Counter;
     Counters.Counter private _courseId;
     Counters.Counter private _courseSold;
     IERC20 public usdc;
+    IERC20 public sardine;
 
-    constructor() {
+    constructor(address _addr) {
         usdc = IERC20(0x68ec573C119826db2eaEA1Efbfc2970cDaC869c4);
+        sardine = IERC20(_addr);
     }
 
     struct Course {
@@ -51,10 +53,9 @@ contract Inflow is ReentrancyGuard {
         return id;
     }
 
-    function purchaseCourse(uint256 _id) external payable nonReentrant {
+    function purchaseCourse(uint256 _id) external nonReentrant {
         Course memory course = courses[_id];
         uint256 price = course.price;
-        console.log(price);
         usdc.transferFrom(msg.sender, course.author, price);
         purchasedCourses[msg.sender].push(course.id);
         _courseSold.increment();
@@ -101,5 +102,16 @@ contract Inflow is ReentrancyGuard {
             }
         }
         return coursesCreated;
+    }
+
+    function purchaseWithSardine(uint256 _id) external nonReentrant {
+      Course memory course = courses[_id];
+      require(course.acceptTokens, "This course doesn't accept sardine tokens");
+      uint256 price = (course.price * 7) / 10;
+      uint256 tokenAmount = (course.price * 3) / 10;
+      usdc.transferFrom(msg.sender, course.author, price);
+      sardine.transferFrom(msg.sender, course.author, tokenAmount);
+      purchasedCourses[msg.sender].push(course.id);
+      _courseSold.increment();
     }
 }

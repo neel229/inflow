@@ -1,39 +1,30 @@
-import "tailwindcss/tailwind.css";
-import React from "react";
+import { createWeb3ReactRoot, Web3ReactProvider } from "@web3-react/core";
 import { AppProps } from "next/app";
-import { globalCss } from "@stitches/react";
-import Layout from "../components/Layout";
-import { Web3ReactProvider } from "@web3-react/core";
-import { getLibrary } from "../utils/connector";
+import Head from "next/head";
+import "../styles/globals.css";
+import getLibrary from "../utils/web3-react/getLibrary";
 
-const gloablStyles = globalCss({
-  "*": {
-    margin: 0,
-    boxSizing: "border-box",
-    padding: 0,
-  },
-  html: {
-    overflowX: "hidden",
-  },
-  body: {
-    backgroundColor: "$loContrast",
-    boxSizing: "border-box",
-  },
-  svg: { display: "block" },
-  "::selection": {
-    backgroundColor: "$grass3",
-  },
-});
+function MyApp({ Component, pageProps }: AppProps): JSX.Element {
+  const Web3ProviderNetwork = createWeb3ReactRoot("NETWORK");
 
-const MyApp = ({ Component, pageProps }: AppProps) => {
-  gloablStyles();
   return (
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </Web3ReactProvider>
+    <>
+      <Head>
+        <link
+          rel="preload"
+          href="/fonts/Inter-roman.latin.var.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      </Head>
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <Web3ProviderNetwork getLibrary={getLibrary}>
+          <Component {...pageProps} />
+        </Web3ProviderNetwork>
+      </Web3ReactProvider>
+    </>
   );
-};
+}
 
 export default MyApp;
