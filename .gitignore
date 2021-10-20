@@ -16,3 +16,7 @@ frontend/.vercel
 #Hardhat files
 contracts/cache
 contracts/artifacts
+
+#env files
+backend/.env
+frontend/.env

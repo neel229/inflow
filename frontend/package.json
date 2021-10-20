@@ -1,44 +1,30 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "type-check": "tsc"
   },
   "dependencies": {
-    "@ethersproject/providers": "^5.4.5",
-    "@modulz/radix-icons": "^4.0.0",
-    "@radix-ui/colors": "^0.1.7",
-    "@radix-ui/react-switch": "^0.1.0",
-    "@stitches/react": "^1.0.0",
-    "@web3-react/core": "^6.1.9",
-    "@web3-react/injected-connector": "^6.0.7",
-    "axios": "^0.21.4",
-    "ipfs-http-client": "^52.0.3",
     "next": "latest",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-player": "^2.9.0",
-    "swr": "^1.0.1"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.0.0",
-    "@nomiclabs/hardhat-waffle": "^2.0.0",
-    "@types/chai": "^4.2.21",
-    "@types/mocha": "^9.0.0",
-    "@types/node": "^16.9.1",
-    "@types/react": "^17.0.20",
-    "autoprefixer": "^10.3.4",
-    "chai": "^4.3.4",
-    "eslint": "^7.32.0",
-    "ethereum-waffle": "^3.0.0",
-    "ethers": "^5.0.0",
-    "hardhat": "^2.6.4",
-    "postcss": "^8.3.6",
-    "prettier": "2.4.1",
+    "@ethersproject/providers": "^5.4.5",
+    "@radix-ui/react-tooltip": "^0.1.0",
+    "@types/node": "^12.12.21",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
+    "@web3-react/core": "^6.1.9",
+    "@web3-react/injected-connector": "^6.0.7",
+    "@web3-react/walletconnect-connector": "^6.2.4",
+    "@web3-react/walletlink-connector": "^6.2.5",
+    "autoprefixer": "^10.3.6",
+    "postcss": "^8.3.8",
     "radix-colors-for-tailwind": "^2.0.0",
-    "tailwindcss": "^2.2.15",
-    "ts-node": "^10.2.1",
+    "tailwindcss": "^2.2.16",
     "typescript": "^4.4.2"
   }
 }

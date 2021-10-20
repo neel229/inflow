@@ -1,23 +1,9 @@
-import { Web3Provider } from "@ethersproject/providers";
-import { useWeb3React } from "@web3-react/core";
-import Hero from "../components/Hero";
-import LatestCourse from "../components/LatestCourses";
+import Nav from "../components/Nav/index";
 
-const Home = () => {
-  const { active } = useWeb3React<Web3Provider>();
-
+export default function Home() {
   return (
     <>
-      {!active ? (
-        <>
-          <Hero />
-          <LatestCourse />
-        </>
-      ) : (
-        <LatestCourse />
-      )}
+      <Nav />
     </>
   );
-};
-
-export default Home;
+}
